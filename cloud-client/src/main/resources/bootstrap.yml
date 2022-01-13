@@ -1,0 +1,32 @@
+spring:
+  cloud:
+    config:
+      name: ${spring.application.name} #application
+      profile: ${spring.profiles.active}  #profile
+      label: ${branch}
+      fail-fast: true
+      override-system-properties: true
+      discovery:
+        enabled: true # [new]开启config服务发现的支持
+        service-id: micro-config-server #[new] config-server-application-name
+    stream:
+      bindings:
+        springCloudBusInput:
+          destination: springCloudBus
+      kafka:
+        binder:
+          brokers: ${kafka-brokers}
+          zk-nodes: ${zk-nodes}
+          configuration:
+            auto:
+              offset:                #可以设置原生kafka属性，比如设置新的消费组从最新的offset开始消费
+                reset: latest
+
+management:
+  security:
+    enabled: false
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/
+    registry-fetch-interval-seconds: 10 #eureka client刷新本地缓存时间 # [new]注册中erueka-server
