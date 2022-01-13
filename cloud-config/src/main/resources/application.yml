@@ -11,9 +11,9 @@ spring:
         native:
           search-locations: file:E:\\my-project\\demo-config\\micro-record,file:E:\\my-project\\demo-config\\micro-busiconf
 #        git:
-#          uri: https://gitee.com/nmcc33/demo-config.git
-#          username: nmcc_88@163.com
-#          password: Nmcc@8126
+#          uri:
+#          username:
+#          password:
 #          search-paths: /micro-record,/micro-busiconf
     stream:
       bindings:
