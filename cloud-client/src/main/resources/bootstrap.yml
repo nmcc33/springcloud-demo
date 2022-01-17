@@ -30,3 +30,11 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:1111/eureka/
     registry-fetch-interval-seconds: 10 #eureka client刷新本地缓存时间 # [new]注册中erueka-server
+
+logging:
+  appender: console
+  path: /data/logs/
+  level:
+    ROOT: info
+  config: classpath:logback-spring.xml
+

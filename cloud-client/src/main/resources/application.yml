@@ -6,3 +6,7 @@ spring:
     name: micro-record
   profiles:
     active: ${environment}
+
+log:
+  file:
+    path: /home/log

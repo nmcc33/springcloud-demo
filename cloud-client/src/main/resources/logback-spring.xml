@@ -1,39 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>  
-	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
-    <springProperty scope="context" name="logLevel" source="logging.pattern.level" defaultValue="info"/>
-    <springProperty scope="context" name="logPath" source="logging.path" defaultValue="/data/logs/"/>
-    <springProperty scope="context" name="logAppender" source="logging.appender" defaultValue="file"/>
-    <springProperty scope="context" name="serverName" source="spring.application.name" defaultValue="microserver"/>
-    <springProperty scope="context" name="logRocketmqLevel" source="logging.rocketmq.level" defaultValue="warn"/>
-    <property name="maxHistory_file" value="30"/>  
-    <property name="maxHistory_beat" value="7"/>  
-    <property name="LOG_FILE" value="${BUILD_FOLDER:-build}/${springAppName}"/>
-    <property name="MICRO_CONSOLE_LOG_PATTERN" value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(${serverName}){boldGreen} %clr([]){boldGreen} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
-    <property name="MICRO_FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } ${serverName}  --- [%t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
-    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">  
-       <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<pattern>${MICRO_CONSOLE_LOG_PATTERN}</pattern>
-			<charset>utf8</charset>
-		</encoder>
-    </appender>  
-     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">  
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
-            <fileNamePattern>${logPath}/${serverName}/${serverName}.%d{yyyy-MM-dd}.log</fileNamePattern>  
-            <maxHistory>${maxHistory_file}</maxHistory>  
-        </rollingPolicy>  
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<pattern>${MICRO_FILE_LOG_PATTERN}</pattern>
-		</encoder>
+<configuration>
+    <!-- 日志存放路径 -->
+    <!--<property name="log.path" value="/opt/logs/yqshop-api" />-->
+    <springProperty scope="context" name="log.path" source="log.file.path" defalue="log.file.path"/>
+    <springProperty scope="context" name="port" source="server.port" defalue="8001"/>
+    <!-- 日志输出格式 -->
+    <property name="log.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />
+
+    <!-- 控制台输出 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
     </appender>
 
-    <logger name="RocketmqClient" additivity="false">
-        <level value="${logRocketmqLevel}"/>
-        <appender-ref ref="${logAppender}"/>
+    <!-- 系统日志输出 -->
+    <appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/client-${port}.log</file>
+        <!-- 循环政策：基于时间创建日志文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日志文件名格式 -->
+            <fileNamePattern>${log.path}/client-${port}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 过滤的级别 -->
+            <level>INFO</level>
+            <!-- 匹配时的操作：接收（记录） -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 不匹配时的操作：拒绝（不记录） -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="AopRollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/aopInteceptor-${port}.log</file>
+        <!-- 循环政策：基于时间创建日志文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日志文件名格式 -->
+            <fileNamePattern>${log.path}/aopInteceptor-${port}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 过滤的级别 -->
+            <level>ERROR</level>
+            <!-- 匹配时的操作：接收（记录） -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 不匹配时的操作：拒绝（不记录） -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 用户访问日志输出  -->
+    <appender name="OrderLogFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/order-${port}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <fileNamePattern>${log.path}/order-${port}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 过滤的级别 -->
+            <level>INFO</level>
+            <!-- 匹配时的操作：接收（记录） -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 不匹配时的操作：拒绝（不记录） -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 系统模块日志级别控制  -->
+    <logger name="com" level="info" />
+    <!-- Spring日志级别控制  -->
+    <logger name="org.springframework" level="warn" />
+
+    <!-- zk日志级别控制  -->
+    <logger name=".I0Itec.zkclient." level="warn" />
+
+    <root level="info">
+        <appender-ref ref="console" />
+        <appender-ref ref="file_info" />
+    </root>
+
+    <!--系统操作日志-->
+
+    <logger name="aoplog" level="info">
+        <appender-ref ref="AopRollingFile"/>
     </logger>
-      
-    <root>  
-        <level value="${logLevel}" />  
-        <appender-ref ref="${logAppender}" />
-    </root>  
-</configuration>   
+    <!--系统订单操作日志-->
+    <logger name="orderlog" level="info">
+        <appender-ref ref="OrderLogFile"/>
+    </logger>
+</configuration>

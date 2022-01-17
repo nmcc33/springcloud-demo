@@ -9,7 +9,7 @@ spring:
     config:
       server:
         native:
-          search-locations: file:E:\\my-project\\demo-config\\micro-record,file:E:\\my-project\\demo-config\\micro-busiconf
+          search-locations: file:E:\\my-project\\demo-config\\micro-record,file:E:\\my-project\\demo-config\\micro-busiconf,file:E:\my-project\demo-config\micro-acos-api,file:E:\my-project\demo-config\api-third,file:E:\my-project\demo-config\micro-acos-api,file:E:\my-project\demo-config\micro-acos-admin,file:E:\my-project\demo-config\micro-acos-api,file:E:\my-project\demo-config\micro-inner-gateway
 #        git:
 #          uri:
 #          username:
