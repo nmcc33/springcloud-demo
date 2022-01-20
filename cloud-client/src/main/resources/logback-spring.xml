@@ -5,7 +5,7 @@
     <springProperty scope="context" name="log.path" source="log.file.path" defalue="log.file.path"/>
     <springProperty scope="context" name="port" source="server.port" defalue="8001"/>
     <!-- 日志输出格式 -->
-    <property name="log.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />
+    <property name="log.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n"/>
 
     <!-- 控制台输出 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
@@ -82,16 +82,16 @@
     </appender>
 
     <!-- 系统模块日志级别控制  -->
-    <logger name="com" level="info" />
+    <logger name="com" level="info"/>
     <!-- Spring日志级别控制  -->
-    <logger name="org.springframework" level="warn" />
+    <logger name="org.springframework" level="warn"/>
 
     <!-- zk日志级别控制  -->
-    <logger name=".I0Itec.zkclient." level="warn" />
+    <logger name=".I0Itec.zkclient." level="warn"/>
 
     <root level="info">
-        <appender-ref ref="console" />
-        <appender-ref ref="file_info" />
+        <appender-ref ref="console"/>
+        <appender-ref ref="file_info"/>
     </root>
 
     <!--系统操作日志-->

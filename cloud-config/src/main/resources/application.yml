@@ -10,11 +10,11 @@ spring:
       server:
         native:
           search-locations: file:E:\\my-project\\demo-config\\micro-record,file:E:\\my-project\\demo-config\\micro-busiconf,file:E:\my-project\demo-config\micro-acos-api,file:E:\my-project\demo-config\api-third,file:E:\my-project\demo-config\micro-acos-api,file:E:\my-project\demo-config\micro-acos-admin,file:E:\my-project\demo-config\micro-acos-api,file:E:\my-project\demo-config\micro-inner-gateway
-#        git:
-#          uri:
-#          username:
-#          password:
-#          search-paths: /micro-record,/micro-busiconf
+    #        git:
+    #          uri:
+    #          username:
+    #          password:
+    #          search-paths: /micro-record,/micro-busiconf
     stream:
       bindings:
         springCloudBusOutput:

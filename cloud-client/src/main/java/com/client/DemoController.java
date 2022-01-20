@@ -14,10 +14,11 @@ public class DemoController implements InitializingBean {
     private String message;
 
     @RequestMapping("printMessage")
-    public String printMessage(){
+    public String printMessage() {
         System.out.println(message);
         return message;
     }
+
     @Override
     public void afterPropertiesSet() throws Exception {
         System.out.println(message);

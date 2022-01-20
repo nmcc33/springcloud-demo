@@ -13,6 +13,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @EnableEurekaClient
 public class ConfigApplication {
     static Logger logger = LoggerFactory.getLogger(ConfigApplication.class);
+
     public static void main(String[] args) {
         new SpringApplicationBuilder(ConfigApplication.class).web(true).run(args);
     }
