@@ -23,4 +23,10 @@ public class DemoController implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         System.out.println(message);
     }
+
+    @RequestMapping("getHome")
+    public String getHome() {
+        System.out.println(message);
+        return message;
+    }
 }

@@ -17,6 +17,7 @@
         <module>cloud-eureka</module>
         <module>cloud-config</module>
         <module>cloud-client</module>
+        <module>cloud-fegin</module>
     </modules>
 
     <dependencyManagement>
@@ -30,5 +31,40 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>utf-8</encoding>
+                    <useDefaultDelimiters>true</useDefaultDelimiters>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>application.yml</exclude>
+                        <exclude>application-dev.yml</exclude>
+                        <exclude>application-test.yml</exclude>
+                        <exclude>application-pre.yml</exclude>
+                        <exclude>application-prod.yml</exclude>
+                        <exclude>logback-spring.xml</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
