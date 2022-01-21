@@ -1,5 +1,6 @@
 server:
   port: 2222
+
 eureka:
   server:
     enable-self-preservation: false
@@ -10,3 +11,9 @@ eureka:
     fetch-registry: false
     serviceUrl:
       defaultZone: http://localhost:2222/eureka/
+spring:
+  application:
+    name: eureka-client
+    mainclass: com.nmcc.EurekaApplication
+  profiles:
+    active: dev

@@ -14,5 +14,6 @@ eureka:
 spring:
   application:
     name: eureka-client
+    mainclass: com.nmcc.EurekaApplication
   profiles:
     active: dev

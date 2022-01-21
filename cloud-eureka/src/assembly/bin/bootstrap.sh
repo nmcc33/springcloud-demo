@@ -80,7 +80,7 @@ fi
 
 #get spring boot application main class,through springboot param 'spring.application.mainclass' property obtain.
 MAIN_CLASS=`grep -w 'mainclass:' $APPLICATION_CONFIG_FILE | sed s/[[:space:]]//g | awk -F':' '{print $2}'`
-APPLICATION_NAME=`grep -w 'name:' $APPLICATION_CONFIG_FILE | sed s/[[:space:]]//g | awk -F':' '/micro|api/{print $2}'`
+APPLICATION_NAME=`grep -w 'name:' $APPLICATION_CONFIG_FILE | sed s/[[:space:]]//g | awk -F':' '{print $2}'`
 echofont 32 "application-name="$APPLICATION_NAME
 if [ -z $MAIN_CLASS ] ;then
  echofont 31 "Error: springboot application not set main class,please check config file of application.yml and set property: spring.application.mainclass"
