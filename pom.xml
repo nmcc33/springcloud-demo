@@ -34,6 +34,12 @@
 
     <build>
         <plugins>
+            <!-- 屏蔽掉springboot自身打包插件
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -54,15 +60,31 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-<!--                    <excludes>-->
-<!--                        <exclude>application.yml</exclude>-->
-<!--                        <exclude>application-dev.yml</exclude>-->
-<!--                        <exclude>application-test.yml</exclude>-->
-<!--                        <exclude>application-pre.yml</exclude>-->
-<!--                        <exclude>application-prod.yml</exclude>-->
-<!--                        <exclude>logback-spring.xml</exclude>-->
-<!--                    </excludes>-->
+                    <excludes>
+                        <exclude>*.yml</exclude>
+                        <exclude>logback-spring.xml</exclude>
+                        <exclude>scripts/**</exclude>
+                    </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptors>
+                        <descriptor>src/assembly/conf/assembly-config.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
