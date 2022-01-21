@@ -1,0 +1,15 @@
+server:
+  port: 8006
+  context-path: /
+spring:
+  application:
+    name: cloud-fegin
+  profiles:
+    active: dev
+
+log:
+  file:
+    path: /home/log
+
+eureka:
+  url: 127.0.0.1:80
